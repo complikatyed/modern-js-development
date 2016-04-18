@@ -1,0 +1,114 @@
+Create a JSON file describing each product you offer. Add a key/value pair that creates a relationship to the appropriate product type. Add at least 3 products for each type.
+
+{
+    "products": [
+        "fairy_sparklers": {
+            "id": 0,
+            "type": 0,
+            "name": "Fairy Sparklers",
+            "description": "Multi-colored sparklers that are safe for any age."
+        },
+        "family_pack": {
+            "id": 1,
+            "type": 0,
+            "name": "The Family Pack",
+            "description": "Impress your uncles and your dad with this festive display."
+        },
+        "lenny": {
+            "id": 2,
+            "type": 0,
+            "name": "The One-handed Lenny",
+            "description": "Get back in the fireworks game -- specially designed for less adept!"
+        },
+        "shotgun": {
+            "id": 3,
+            "type": 1,
+            "name": "The Shotgun Wedding Collection",
+            "description": "Not an actual shotgun of course, but plenty of bang for your buck."
+        },
+        "rainbow": {
+            "id": 4,
+            "type": 1,
+            "name": "The Rainbow Connection",
+            "description": "Celebrate your union with a little extra flair."
+        },
+        "elopement": {
+            "id": 5,
+            "type": 1,
+            "name": "Hooray, They Eloped",
+            "description": "When you can't quite afford an wedding and don't really like them anyway."
+        },
+        "mister-rogers": {
+            "id": 6,
+            "type": 2,
+            "name": "Mr. Rogers",
+            "description": "Thanks for letting us use your swimming pool!"
+        },
+        "yappy-dog": {
+            "id": 7,
+            "type": 2,
+            "name": "Yappy Dog",
+            "description": "They'll stop leaving the dog in the yard from now on."
+        },
+        "short-term": {
+            "id": 8,
+            "type": 2,
+            "name": "STR This",
+            "description": "Who wants to spend a relaxing weekend with my box of M80s?"
+        },
+        "mother-in-law": {
+            "id": 9,
+            "type": 3,
+            "name": "The Mother-in-Law",
+            "description": "When you absolutely, positively, need it blown up NOW!"
+        },
+        "quarry": {
+            "id": 10,
+            "type": 3,
+            "name": "The Quarry Master",
+            "description": "Because every kid deserves a swimmin' hole."
+        },
+        "executor": {
+            "id": 11,
+            "type": 3,
+            "name": "The Executor",
+            "description": "Lawyers often get it wrong, don't they?"
+        },
+        "cat-five": {
+            "id": 12,
+            "type": 4,
+            "name": "Category Five",
+            "description": "Finish the damage that pesky tornado started."
+        },
+        "log-roll": {
+            "id": 13,
+            "type": 4,
+            "name": "The Log Roll",
+            "description": "Because sometimes a chain saw just won't cut it."
+        },
+        "punisher": {
+            "id": 14,
+            "type": 4,
+            "name": "The Punisher",
+            "description": "Sometimes I ask for punishment.  Then I remember, I am punishment."
+        },
+        "mole": {
+            "id": 15,
+            "type": 5,
+            "name": "Whack a Mole",
+            "description": "Remove lawn pests with maximum impact and minimum effort."
+        },
+        "gopher": {
+            "id": 16,
+            "type": 5,
+            "name": "Gopher Getter",
+            "description": "Don't wait 'til you fall in a sink hole. Get 'em now!"
+        },
+        "rabbit": {
+            "id": 17,
+            "type": 5,
+            "name": "Rabbit Fire",
+            "description": "Tired of losing your lettuces? A handful of these will do the trick."
+        }
+    ]
+}

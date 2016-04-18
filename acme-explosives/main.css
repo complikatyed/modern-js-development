@@ -1,0 +1,40 @@
+
+.blue {
+  background-color: #2483CB;
+}
+
+.navbar-header {
+  padding: 20px 40px 20px 20px;
+}
+
+.navbar-brand {
+  height: 200px;
+}
+
+img.brand {
+  max-height: 200px;
+}
+
+.title {
+  float: left;
+  color: #ffDf00;
+  font-weight: strong;
+  font-size: 4em;
+  margin-top: 50px;
+}
+
+.address {
+  display: inline-block;
+  text-align: center;
+  color: #ffDf00;
+  font-weight: strong;
+  font-size: 1.25em;
+}
+
+.btn-group {
+  display: block;
+}
+
+.btn-danger {
+  font-size: 1.25em;
+}

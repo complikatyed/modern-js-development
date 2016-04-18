@@ -1,0 +1,40 @@
+{
+    "types": [
+        {
+            "id": 0,
+            "category": 0,
+            "name": "personal",
+            "description": "Fireworks intended for recreational use during holiday celebrations"
+        },
+        {
+            "id": 1,
+            "category": 0,
+            "name": "wedding",
+            "description": "Celebrate marriage in a variety of contexts"
+        },
+        {
+            "id": 2,
+            "category": 0,
+            "name": "neighbors",
+            "description": "Si vis pacem, para bellum."
+        },
+        {
+            "id": 3,
+            "category": 1,
+            "name": "family",
+            "description": "Because sometimes relationships can be explosive."
+        },
+        {
+            "id": 4,
+            "category": 1,
+            "name": "insurance",
+            "description": "In lieu of good neighbors, Acme is here."
+        },
+        {
+            "id": 5,
+            "category": 1,
+            "name": "lawn-and-garden",
+            "description": "For around the house jobs of all sizes."
+        }
+    ]
+}
