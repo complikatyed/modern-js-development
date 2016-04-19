@@ -20,8 +20,20 @@
 // -- Do NOT display the integer id value -->
 
 
+// if category.
 
 
+var displayCategory = function () {
+
+}
+
+
+var findObjectKeys = function(foo) {
+  for(i in foo) {
+    console.log (foo[i].name);
+    console.log (foo[i].description);
+  }
+};
 
 
 
@@ -35,11 +47,12 @@ var loadProducts = function() {
       if(this.status === 200) {  // IF SUCCESS
 
         var data = JSON.parse(this.responseText);
-          console.log(data);
 
-          fillInventory(data); // <--- This function is not yet defined in this version
+        var thingy = data.products[0];
 
-          resolve(inventory);  // Using whatever function gets passed in to the promise above
+          findObjectKeys(thingy);
+
+          //resolve(data);
 
       } else {  // if failure
 
@@ -57,19 +70,110 @@ var loadProducts = function() {
 };
 
 
+var loadCategory = function() {
+
+  return new Promise(function (resolve, reject) {  // Resolve and reject will be functions we pass in later
+    var categoryLoader = new XMLHttpRequest();
+
+    categoryLoader.onload = function() {
+      if(this.status === 200) {  // IF SUCCESS
+
+        var data = JSON.parse(this.responseText);
+
+          console.log("First category is", data.categories[0].name);
+          console.log("Second category is", data.categories[1].name);
+
+      } else {  // if failure
+
+        reject(new Error(this.statusText)); // Reports back what the status was so you know what went wrong
+      }
+    }
+    categoryLoader.onerror = function() {
+      reject(new Error(
+        'XMLHTTPRequest ERROR: ' + this.statusText
+        ));
+    }
+    categoryLoader.open("GET", "jsonFiles/categories.json");
+    categoryLoader.send();
+  });
+};
+
+var loadTypes = function() {
+
+  return new Promise(function (resolve, reject) {  // Resolve and reject will be functions we pass in later
+    var typeLoader = new XMLHttpRequest();
+
+    typeLoader.onload = function() {
+      if(this.status === 200) {  // IF SUCCESS
+
+        var data = JSON.parse(this.responseText);
+
+
+          console.log("First type is", data.types[0].name);
+
+          //fillInventory(data); // <--- This function is not yet defined in this version
+
+          //resolve(inventory);  // Using whatever function gets passed in to the promise above
+
+      } else {  // if failure
+
+        reject(new Error(this.statusText)); // Reports back what the status was so you know what went wrong
+      }
+    }
+    typeLoader.onerror = function() {
+      reject(new Error(
+        'XMLHTTPRequest ERROR: ' + this.statusText
+        ));
+    }
+    typeLoader.open("GET", "jsonFiles/types.json");
+    typeLoader.send();
+  });
+};
+
+
+
+
+
+
+
 // ---------- Function to take the items from the array and display them on page ------ //
 function populatePage(data) {
   console.log(data);
-}
+};
 
-// Calling the first Promise...
+// -------------------- Calling the Promises... ------------------------------- //
+
+// ------------ Calling the first promise ---------- //
+
+loadCategory().then (
+  function(data) {
+  },
+  function(reason) {
+    console.log("Category didn't load properly", reason);
+  }
+);
+
+
+// ---------- Calling the second promise ---------- //
+
+loadTypes().then (
+  function(data) {
+  },
+  function(reason) {
+    console.log("Types didn't load properly", reason);
+  }
+);
+
+// ---------- Calling the third promise ---------- //
 
 loadProducts().then (
   function(data) {
+    // Function that sends the data to the DOM
     populatePage(data);
   },
+
   function(reason) {
-    console.log('something is not right', reason);
+    console.log("Products didn't load properly", reason);
   }
 );
 
