@@ -1,6 +1,5 @@
 //"use strict";
 
-
 // -- User selects a category from a dropdown.  -- //
 
 // -- If user selects "Demolition" use Promises to:
@@ -20,22 +19,102 @@
 // -- Do NOT display the integer id value -->
 
 
-// if category.
 
 
 var displayCategory = function () {
 
-}
+};
 
+// ---------- Converts data from one big object (full of product objects)  ----------- //
+// ---------- into array of smaller objects with the keys we'll need later ----------- //
 
-var findObjectKeys = function(foo) {
+var makeProductArray = function(foo) {
+
+  var productArray = [];
+
   for(i in foo) {
-    console.log (foo[i].name);
-    console.log (foo[i].description);
-  }
+
+    // --- Creates a new (smaller) object with the keys we'll need later.      --- //
+    // --- NOTE:  the new object has to be declared inside the loop or ALL the --- //
+    // ---        objects in the array will be overwritten w last item's data  --- //
+    var myObject = {
+      name: '',
+      description: '',
+      type: ''
+    };
+
+    // --- Adds the data from the objects to our new object --- //
+    myObject.name = foo[i].name;
+    myObject.description = foo[i].description;
+    myObject.type = foo[i].type;
+
+    // --- Add the new object to the array --- //
+    productArray.push(myObject);
+
+   }
+
+   return productArray;
 };
 
 
+var makeTypeArray = function(foo) {
+
+  var typeArray = [];
+
+  for(i in foo) {
+
+    var myTypeObject = {
+      name: '',
+      description: '',
+      type: '',
+      category: ''
+    };
+
+    // --- Adds the data from the objects to our new object --- //
+    myTypeObject.name = foo[i].name;
+    myTypeObject.description = foo[i].description;
+    myTypeObject.type = foo[i].type;
+    myTypeObject.category = foo[i].category;
+
+    // --- Add the new object to the array --- //
+    typeArray.push(myTypeObject);
+
+   }
+   console.log("typeArray", typeArray)
+   //return typeArray;
+};
+
+
+
+ // var type = "";
+ //    var category = "";
+
+ //    switch (tempType) {
+ //      case 0:
+ //        foo[i].type = "Personal";
+ //        foo[i].category = "Fireworks";
+ //        break;
+ //      case 1:
+ //        type = "Wedding";
+ //        category = "Fireworks";
+ //        break;
+ //      case 2:
+ //        type = "Neighbors";
+ //        category = "Fireworks";
+ //        break;
+ //      case 3:
+ //        type = "Family";
+ //        category = "Demolition";
+ //        break;
+ //      case 4:
+ //        type = "Insurance";
+ //        category = "Demolition";
+ //        break;
+ //      case 5:
+ //        type = "Lawn and Garden";
+ //        category = "Demolition";
+ //        break;
+ //    }
 
 
 var loadProducts = function() {
@@ -48,9 +127,10 @@ var loadProducts = function() {
 
         var data = JSON.parse(this.responseText);
 
-        var thingy = data.products[0];
+        var productsObject = data.products[0];
+          console.log("THIRD PROMISE LOADED!");
 
-          findObjectKeys(thingy);
+          makeProductArray(productsObject);
 
           //resolve(data);
 
@@ -79,7 +159,7 @@ var loadCategory = function() {
       if(this.status === 200) {  // IF SUCCESS
 
         var data = JSON.parse(this.responseText);
-
+          console.log("FIRST PROMISE LOADED!");
           console.log("First category is", data.categories[0].name);
           console.log("Second category is", data.categories[1].name);
 
@@ -107,17 +187,14 @@ var loadTypes = function() {
       if(this.status === 200) {  // IF SUCCESS
 
         var data = JSON.parse(this.responseText);
+        var typesObject = data.types;
+          console.log(typesObject);
 
+          makeTypeArray(typesObject);
 
-          console.log("First type is", data.types[0].name);
+      } else {
 
-          //fillInventory(data); // <--- This function is not yet defined in this version
-
-          //resolve(inventory);  // Using whatever function gets passed in to the promise above
-
-      } else {  // if failure
-
-        reject(new Error(this.statusText)); // Reports back what the status was so you know what went wrong
+        reject(new Error(this.statusText));
       }
     }
     typeLoader.onerror = function() {
@@ -138,7 +215,7 @@ var loadTypes = function() {
 
 // ---------- Function to take the items from the array and display them on page ------ //
 function populatePage(data) {
-  console.log(data);
+  console.log("THIRD PROMISE LOADED!");
 };
 
 // -------------------- Calling the Promises... ------------------------------- //
