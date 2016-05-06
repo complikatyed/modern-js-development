@@ -56,36 +56,6 @@ var makeProductArray = function(foo) {
    return productArray;
 };
 
-
-var makeTypeArray = function(foo) {
-
-  var typeArray = [];
-
-  for(i in foo) {
-
-    var myTypeObject = {
-      name: '',
-      description: '',
-      type: '',
-      category: ''
-    };
-
-    // --- Adds the data from the objects to our new object --- //
-    myTypeObject.name = foo[i].name;
-    myTypeObject.description = foo[i].description;
-    myTypeObject.type = foo[i].type;
-    myTypeObject.category = foo[i].category;
-
-    // --- Add the new object to the array --- //
-    typeArray.push(myTypeObject);
-
-   }
-   console.log("typeArray", typeArray)
-   //return typeArray;
-};
-
-
-
  // var type = "";
  //    var category = "";
 
@@ -117,38 +87,8 @@ var makeTypeArray = function(foo) {
  //    }
 
 
-var loadProducts = function() {
 
-  return new Promise(function (resolve, reject) {  // Resolve and reject will be functions we pass in later
-    var productLoader = new XMLHttpRequest();
-
-    productLoader.onload = function() {
-      if(this.status === 200) {  // IF SUCCESS
-
-        var data = JSON.parse(this.responseText);
-
-        var productsObject = data.products[0];
-          console.log("THIRD PROMISE LOADED!");
-
-          makeProductArray(productsObject);
-
-          //resolve(data);
-
-      } else {  // if failure
-
-        reject(new Error(this.statusText)); // Reports back what the status was so you know what went wrong
-      }
-    }
-    productLoader.onerror = function() {
-      reject(new Error(
-        'XMLHTTPRequest ERROR: ' + this.statusText
-        ));
-    }
-    productLoader.open("GET", "jsonFiles/products.json");
-    productLoader.send();
-  });
-};
-
+// --------- First Promise (Loads from categories.json) ----------- //
 
 var loadCategory = function() {
 
@@ -159,9 +99,11 @@ var loadCategory = function() {
       if(this.status === 200) {  // IF SUCCESS
 
         var data = JSON.parse(this.responseText);
-          console.log("FIRST PROMISE LOADED!");
-          console.log("First category is", data.categories[0].name);
-          console.log("Second category is", data.categories[1].name);
+        console.log("FIRST PROMISE LOADED!");
+        console.log("First category is", data.categories[0].name);
+        console.log("Second category is", data.categories[1].name);
+
+        resolve(data);
 
       } else {  // if failure
 
@@ -178,6 +120,9 @@ var loadCategory = function() {
   });
 };
 
+
+// --------- Second Promise (Loads from types.json) ----------- //
+
 var loadTypes = function() {
 
   return new Promise(function (resolve, reject) {  // Resolve and reject will be functions we pass in later
@@ -188,9 +133,8 @@ var loadTypes = function() {
 
         var data = JSON.parse(this.responseText);
         var typesObject = data.types;
-          console.log(typesObject);
-
-          makeTypeArray(typesObject);
+        console.log(typesObject);
+        resolve(typesObject);
 
       } else {
 
@@ -207,10 +151,36 @@ var loadTypes = function() {
   });
 };
 
+// --------- Third Promise (Loads from products.json) ----------- //
 
+var loadProducts = function() {
 
+  return new Promise(function (resolve, reject) {
+    var productLoader = new XMLHttpRequest();
 
+    productLoader.onload = function() {
+      if(this.status === 200) {  // IF SUCCESS
 
+        var data = JSON.parse(this.responseText);
+
+        var productsObject = data.products[0];
+
+        resolve(productsObject);
+
+      } else {
+
+        reject(new Error(this.statusText));
+      }
+    }
+    productLoader.onerror = function() {
+      reject(new Error(
+        'XMLHTTPRequest ERROR: ' + this.statusText
+        ));
+    }
+    productLoader.open("GET", "jsonFiles/products.json");
+    productLoader.send();
+  });
+};
 
 
 // ---------- Function to take the items from the array and display them on page ------ //
@@ -222,37 +192,21 @@ function populatePage(data) {
 
 // ------------ Calling the first promise ---------- //
 
-loadCategory().then (
-  function(data) {
+loadCategory()
+.then (
+  function(categoriesData) {
+    return loadTypes();
   },
   function(reason) {
     console.log("Category didn't load properly", reason);
-  }
-);
+})
+.then (function(typesData){
+  return loadProducts();
+})
+.then (function(productsData) {
+  makeProductArray(productsData);
 
-
-// ---------- Calling the second promise ---------- //
-
-loadTypes().then (
-  function(data) {
-  },
-  function(reason) {
-    console.log("Types didn't load properly", reason);
-  }
-);
-
-// ---------- Calling the third promise ---------- //
-
-loadProducts().then (
-  function(data) {
-    // Function that sends the data to the DOM
-    populatePage(data);
-  },
-
-  function(reason) {
-    console.log("Products didn't load properly", reason);
-  }
-);
+});
 
 
 // ----- PLANNING STEPS -------- //
