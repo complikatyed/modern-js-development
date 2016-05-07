@@ -1,13 +1,63 @@
 //"use strict";
-var categories = [];
-var types      = [];
-var products   = [];
 
-$( "#everything" ).click(function() {
-  loadAllCategories()
+$(document).ready(function() {
+
+  var categories = [];
+  var types      = [];
+  var products   = [];
+
+var loadAllCategories = function() {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "jsonFiles/categories.json"
+    }).done(function(data) {
+      resolve(data);
+    }).fail(function(xhr, status, error) {
+      reject(error);
+    });
+  });
+};
+
+
+// --------- Second Promise (Loads from types.json) ----------- //
+
+var loadAllTypes = function() {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "jsonFiles/types.json"
+    }).done(function(data) {
+      resolve(data);
+    }).fail(function(xhr, status, error) {
+      reject(error);
+    });
+  });
+};
+
+
+// --------- Third Promise (Loads from products.json) ----------- //
+
+var loadAllProducts = function() {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      url: "jsonFiles/products.json"
+    }).done(function(data) {
+      var realProducts = data.products[0];
+      for (i in realProducts) {
+        products.push(realProducts[i]);
+      };
+      resolve(products);
+    }).fail(function(xhr, status, error) {
+      reject(error);
+    });
+  });
+};
+
+
+loadAllCategories()
   .then (
     function(categoriesData) {
       categories = categoriesData.categories;
+      addDropDown();
       return loadAllTypes();
     },
     function(reason) {
@@ -23,186 +73,15 @@ $( "#everything" ).click(function() {
   })
   .then (
     function(productsData) {
-      products = productsData.products;
-      makeProductArray(productsData);
+      //makeProductArray(productsData);
+      populatePage(productsData);
+
     },
     function(reason) {
       console.log("Products didn't load properly", reason);
   });
+$( "select" ).on("change", function() {
 });
-
-// ---------- If user selects "Demolition" ---------- //
-
-$( "#demolition" ).click(function() {
-  console.log("Demolition clicked");
-});
-
-// ---------- If user selects "Fireworks" ---------- //
-
-$( "#fireworks" ).click(function() {
-  console.log("Fireworks clicked");
-});
-
-
-// --------- First Promise (Loads from categories.json) ----------- //
-
-var loadAllCategories = function() {
-
-  return new Promise(function (resolve, reject) {
-    var categoryLoader = new XMLHttpRequest();
-
-    categoryLoader.onload = function() {
-      if(this.status === 200) {  // IF SUCCESS
-
-        var data = JSON.parse(this.responseText);
-
-        // --- 'resolve' is a variable here, the --- //
-        // --- actual function name gets passed  --- //
-        // --- in when we call the promise later --- //
-        resolve(data);
-
-      } else {  // if failure
-
-        reject(new Error(this.statusText)); // Reports back what the status was so you know what went wrong
-      }
-    }
-    categoryLoader.onerror = function() {
-      reject(new Error(
-        'XMLHTTPRequest ERROR: ' + this.statusText
-        ));
-    }
-    categoryLoader.open("GET", "jsonFiles/categories.json");
-    categoryLoader.send();
-  });
-};
-
-
-// --------- Second Promise (Loads from types.json) ----------- //
-
-var loadAllTypes = function() {
-
-  return new Promise(function (resolve, reject) {  // Resolve and reject will be functions we pass in later
-    var typeLoader = new XMLHttpRequest();
-
-    typeLoader.onload = function() {
-      if(this.status === 200) {  // IF SUCCESS
-
-        var data = JSON.parse(this.responseText);
-
-        // --- 'resolve' is a variable here, the --- //
-        // --- actual function name gets passed  --- //
-        // --- in when we call the promise later --- //
-        resolve(data);
-
-      } else {
-
-        reject(new Error(this.statusText));
-      }
-    }
-    typeLoader.onerror = function() {
-      reject(new Error(
-        'XMLHTTPRequest ERROR: ' + this.statusText
-        ));
-    }
-    typeLoader.open("GET", "jsonFiles/types.json");
-    typeLoader.send();
-  });
-};
-
-// --------- Third Promise (Loads from products.json) ----------- //
-
-var loadAllProducts = function() {
-
-  return new Promise(function (resolve, reject) {
-    var productLoader = new XMLHttpRequest();
-
-    productLoader.onload = function() {
-      if(this.status === 200) {  // IF SUCCESS
-
-        var data = JSON.parse(this.responseText);
-
-        resolve(data);
-
-      } else {
-
-        reject(new Error(this.statusText));
-      }
-    }
-    productLoader.onerror = function() {
-      reject(new Error(
-        'XMLHTTPRequest ERROR: ' + this.statusText
-        ));
-    }
-    productLoader.open("GET", "jsonFiles/products.json");
-    productLoader.send();
-  });
-};
-
-
-// ---------- Converts data from one big object (full of product objects)  ----------- //
-// ---------- into array of smaller objects with the keys we'll need later ----------- //
-
-var makeProductArray = function(data) {
-
-  var foo = data.products[0];
-
-  var productArray = [];
-
-  for(i in foo) {
-
-  var tempType = foo[i].type;
-
-      switch (tempType) {
-      case 0:
-        foo[i].type = "Personal";
-        foo[i].category = "Fireworks";
-        break;
-      case 1:
-        foo[i].type = "Wedding";
-        foo[i].category = "Fireworks";
-        break;
-      case 2:
-        foo[i].type = "Neighbors";
-        foo[i].category = "Fireworks";
-        break;
-      case 3:
-        foo[i].type = "Family";
-        foo[i].category = "Demolition";
-        break;
-      case 4:
-        foo[i].type = "Insurance";
-        foo[i].category = "Demolition";
-        break;
-      case 5:
-        foo[i].type = "Lawn and Garden";
-        foo[i].category = "Demolition";
-        break;
-    }
-
-    // --- Creates a new (smaller) object with the keys we'll need later.      --- //
-    // --- NOTE:  the new object has to be declared inside the loop or ALL the --- //
-    // ---        objects in the array will be overwritten w last item's data  --- //
-
-    var myObject = {
-      name: '',
-      description: '',
-      category: '',
-      type: ''
-    };
-
-    // --- Adds the data from the objects to our new object --- //
-    myObject.name = foo[i].name;
-    myObject.description = foo[i].description;
-    myObject.category = foo[i].category;
-    myObject.type = foo[i].type;
-
-    // --- Add the new object to the array --- //
-    productArray.push(myObject);
-
-   }
-
-   populatePage(productArray);
-};
 
 
 // ---------- Function to take the items from the array and display them on page ------ //
@@ -222,3 +101,19 @@ function populatePage(productArray) {
 
   $("#products").html(productString);
 };
+
+// Function to insert select thingies dynamically
+  // Loop over the categories and use key/values:
+  // this.value will equal the category id
+  // The value should be equal to the category
+  // Name should be the name
+function addDropDown() {
+  $.each(categories, function(index, value) {
+    $('#mySelect')
+        .append($("<option></option>")
+      .attr("value", value.id)
+      .text(value.name));
+  });
+};
+
+});  // End of the document.ready function
