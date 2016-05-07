@@ -208,7 +208,10 @@ var makeProductArray = function(data) {
 // ---------- Function to take the items from the array and display them on page ------ //
 
 function populatePage(productArray) {
+
   var productString = "";
+
+
 
   $.each(productArray, function (index, value) {
     productString += `<div class="col-sm-4 card"><h3 class="name">${value.name}</h3>`
@@ -218,11 +221,4 @@ function populatePage(productArray) {
   });
 
   $("#products").html(productString);
-};
-
-// ---------- Setting the variables for category names -------------- //
-function setCategoryVars(categoriesData) {
-  var cat0 = data.categories[0].name;
-  var cat1 = data.categories[1].name;
-  return cat0, cat1;
 };
