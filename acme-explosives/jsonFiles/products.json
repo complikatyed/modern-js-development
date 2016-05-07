@@ -11,7 +11,7 @@
             "id": 1,
             "type": 0,
             "name": "The Family Pack",
-            "description": "Impress your uncles and your dad with this festive display."
+            "description": "Even your jack-ass of a third cousin will enjoy this festive display."
         },
         "lenny": {
             "id": 2,
@@ -22,8 +22,8 @@
         "shotgun": {
             "id": 3,
             "type": 1,
-            "name": "The Shotgun Wedding Collection",
-            "description": "Not an actual shotgun of course, but plenty of bang for your buck."
+            "name": "The Shotgun Wedding",
+            "description": "Not an actual shotgun of course, but still plenty of bang for your buck."
         },
         "rainbow": {
             "id": 4,
@@ -47,19 +47,19 @@
             "id": 7,
             "type": 2,
             "name": "Yappy Dog",
-            "description": "They'll stop leaving the dog in the yard from now on."
+            "description": "Bet ya they stop leaving the dog in the yard now."
         },
         "short-term": {
             "id": 8,
             "type": 2,
-            "name": "STR This",
+            "name": "Short Term Rent This",
             "description": "Who wants to spend a relaxing weekend with my box of M80s?"
         },
         "mother-in-law": {
             "id": 9,
             "type": 3,
             "name": "The Mother-in-Law",
-            "description": "When you absolutely, positively, need it blown up NOW!"
+            "description": "When you absolutely, positively, need that sucker blown up NOW!"
         },
         "quarry": {
             "id": 10,
@@ -71,12 +71,12 @@
             "id": 11,
             "type": 3,
             "name": "The Executor",
-            "description": "Lawyers often get it wrong, don't they?"
+            "description": "Lawyers so often get it wrong, don't they?"
         },
         "cat-five": {
             "id": 12,
             "type": 4,
-            "name": "Category Five",
+            "name": "The Category Five",
             "description": "Finish the damage that pesky tornado started."
         },
         "log-roll": {
@@ -107,7 +107,7 @@
             "id": 17,
             "type": 5,
             "name": "Rabbit Fire",
-            "description": "Tired of losing your lettuces? A handful of these will do the trick."
+            "description": "Tired of losing your lettuces? A handful of these babies will do the trick."
         }
       }
     ]
