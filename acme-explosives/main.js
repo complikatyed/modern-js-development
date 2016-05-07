@@ -1,91 +1,53 @@
 //"use strict";
 
-// -- User selects a category from a dropdown.  -- //
+$( "#everything" ).click(function() {
+  loadCategory()
+  .then (
+    function(categoriesData) {
+      return loadTypes();
+    },
+    function(reason) {
+      console.log("Categories didn't load properly", reason);
+  })
+  .then (
+    function(typesData){
+      return loadProducts();
+    },
+    function(reason) {
+      console.log("Types didn't load properly", reason);
+  })
+  .then (
+    function(productsData) {
+      makeProductArray(productsData);
+    },
+    function(reason) {
+      console.log("Products didn't load properly", reason);
+  });
+});
 
 // -- If user selects "Demolition" use Promises to:
 //   1. load that 'demolition' array of objects from categories.json
 //   2. load types.json
 //   3. then products.json.
 
+$( "#demolition" ).click(function() {
+  console.log( "You clicked Demolition" );
+});
 
 // -- If user selects "Fireworks" use Promises to:
 //   1. load the 'fireworks' array of objects from categories.json
 //   2. load types.json
 //   3. then products.json.
 
+$( "#fireworks" ).click(function() {
+  console.log( "You clicked Fireworks" );
+});
+
+
 // Once all data is loaded, display the products in a Bootstrap grid. //
 
 // Each product must display string name of its product type, and product category. -->
 // -- Do NOT display the integer id value -->
-
-
-
-
-var displayCategory = function () {
-
-};
-
-// ---------- Converts data from one big object (full of product objects)  ----------- //
-// ---------- into array of smaller objects with the keys we'll need later ----------- //
-
-var makeProductArray = function(foo) {
-
-  var productArray = [];
-
-  for(i in foo) {
-
-    // --- Creates a new (smaller) object with the keys we'll need later.      --- //
-    // --- NOTE:  the new object has to be declared inside the loop or ALL the --- //
-    // ---        objects in the array will be overwritten w last item's data  --- //
-    var myObject = {
-      name: '',
-      description: '',
-      type: ''
-    };
-
-    // --- Adds the data from the objects to our new object --- //
-    myObject.name = foo[i].name;
-    myObject.description = foo[i].description;
-    myObject.type = foo[i].type;
-
-    // --- Add the new object to the array --- //
-    productArray.push(myObject);
-
-   }
-
-   return productArray;
-};
-
- // var type = "";
- //    var category = "";
-
- //    switch (tempType) {
- //      case 0:
- //        foo[i].type = "Personal";
- //        foo[i].category = "Fireworks";
- //        break;
- //      case 1:
- //        type = "Wedding";
- //        category = "Fireworks";
- //        break;
- //      case 2:
- //        type = "Neighbors";
- //        category = "Fireworks";
- //        break;
- //      case 3:
- //        type = "Family";
- //        category = "Demolition";
- //        break;
- //      case 4:
- //        type = "Insurance";
- //        category = "Demolition";
- //        break;
- //      case 5:
- //        type = "Lawn and Garden";
- //        category = "Demolition";
- //        break;
- //    }
-
 
 
 // --------- First Promise (Loads from categories.json) ----------- //
@@ -103,6 +65,9 @@ var loadCategory = function() {
         console.log("First category is", data.categories[0].name);
         console.log("Second category is", data.categories[1].name);
 
+        // --- 'resolve' is a variable here, the --- //
+        // --- actual function name gets passed  --- //
+        // --- in when we call the promise later --- //
         resolve(data);
 
       } else {  // if failure
@@ -133,7 +98,10 @@ var loadTypes = function() {
 
         var data = JSON.parse(this.responseText);
         var typesObject = data.types;
-        console.log(typesObject);
+
+        // --- 'resolve' is a variable here, the --- //
+        // --- actual function name gets passed  --- //
+        // --- in when we call the promise later --- //
         resolve(typesObject);
 
       } else {
@@ -165,6 +133,9 @@ var loadProducts = function() {
 
         var productsObject = data.products[0];
 
+        // --- 'resolve' is a variable here, the --- //
+        // --- actual function name gets passed  --- //
+        // --- in when we call the promise later --- //
         resolve(productsObject);
 
       } else {
@@ -183,37 +154,110 @@ var loadProducts = function() {
 };
 
 
-// ---------- Function to take the items from the array and display them on page ------ //
-function populatePage(data) {
-  console.log("THIRD PROMISE LOADED!");
+// -------------------- Calling the nested promises... ------------------- //
+
+// loadCategory()
+// .then (
+//   function(categoriesData) {
+//     return loadTypes();
+//   },
+//   function(reason) {
+//     console.log("Categories didn't load properly", reason);
+// })
+// .then (
+//   function(typesData){
+//     return loadProducts();
+//   },
+//   function(reason) {
+//     console.log("Types didn't load properly", reason);
+// })
+// .then (
+//   function(productsData) {
+//     makeProductArray(productsData);
+//   },
+//   function(reason) {
+//     console.log("Products didn't load properly", reason);
+// });
+
+
+
+
+// ---------- Converts data from one big object (full of product objects)  ----------- //
+// ---------- into array of smaller objects with the keys we'll need later ----------- //
+
+var makeProductArray = function(foo) {
+
+  var productArray = [];
+
+  for(i in foo) {
+
+    // --- Creates a new (smaller) object with the keys we'll need later.      --- //
+    // --- NOTE:  the new object has to be declared inside the loop or ALL the --- //
+    // ---        objects in the array will be overwritten w last item's data  --- //
+    var myObject = {
+      name: '',
+      description: '',
+      type: ''
+    };
+
+    // --- Adds the data from the objects to our new object --- //
+    myObject.name = foo[i].name;
+    myObject.description = foo[i].description;
+    myObject.type = foo[i].type;
+
+    // --- Add the new object to the array --- //
+    productArray.push(myObject);
+
+   }
+
+   populatePage(productArray);
 };
 
-// -------------------- Calling the Promises... ------------------------------- //
 
-// ------------ Calling the first promise ---------- //
+// ---------- Function to take the items from the array and display them on page ------ //
 
-loadCategory()
-.then (
-  function(categoriesData) {
-    return loadTypes();
-  },
-  function(reason) {
-    console.log("Category didn't load properly", reason);
-})
-.then (function(typesData){
-  return loadProducts();
-})
-.then (function(productsData) {
-  makeProductArray(productsData);
+function populatePage(productArray) {
+  var thingy;
 
-});
+  $.each(productArray, function (index, value) {
+    thingy = value.name;
+  });
+
+  $("#products").html(thingy);
+};
 
 
-// ----- PLANNING STEPS -------- //
 
-// Function (event listener?) for detecting click on category choice
-// That calls the first promise:  loadCategory().then ();
 
-// inside it the second promise needs to get called:  loadTypes().then();
 
-// then inside THAT, the third promise gets caled:  loadProducts().then();
+// ---------- Switch statement that I may not need later ---------- //
+ // var type = "";
+ //    var category = "";
+
+ //    switch (tempType) {
+ //      case 0:
+ //        foo[i].type = "Personal";
+ //        foo[i].category = "Fireworks";
+ //        break;
+ //      case 1:
+ //        type = "Wedding";
+ //        category = "Fireworks";
+ //        break;
+ //      case 2:
+ //        type = "Neighbors";
+ //        category = "Fireworks";
+ //        break;
+ //      case 3:
+ //        type = "Family";
+ //        category = "Demolition";
+ //        break;
+ //      case 4:
+ //        type = "Insurance";
+ //        category = "Demolition";
+ //        break;
+ //      case 5:
+ //        type = "Lawn and Garden";
+ //        category = "Demolition";
+ //        break;
+ //    }
+
