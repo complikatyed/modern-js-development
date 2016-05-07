@@ -38,3 +38,11 @@ img.brand {
 .btn-danger {
   font-size: 1.25em;
 }
+
+.card {
+  border: 2px dotted #6858CB;
+  background-color: #ffDf00;
+  margin: 10px;
+  height: 175px;
+  width: 30%;
+}
