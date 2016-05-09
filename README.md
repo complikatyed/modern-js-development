@@ -5,7 +5,7 @@ Third set of [front-end milestones](https://github.com/nashville-software-school
 
 [ACME Explosives Exercise](https://github.com/complikatyed/modern-js-development/tree/master/acme-explosives)  
 
-[Orchard Exercise](https://github.com/complikatyed/modern-js-development/tree/master/orchardexercise) 
+[Orchard Exercise](https://github.com/complikatyed/modern-js-development/tree/master/orchardExercise) 
 
 -------
 
