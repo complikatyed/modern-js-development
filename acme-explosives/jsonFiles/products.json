@@ -35,13 +35,13 @@
             "id": 5,
             "type": 1,
             "name": "Hooray, They Eloped",
-            "description": "When you can't quite afford an wedding and don't really like them anyway."
+            "description": "When you can't quite afford an wedding and don't really like those two anyway."
         },
         "mister-rogers": {
             "id": 6,
             "type": 2,
             "name": "Mr. Rogers",
-            "description": "Thanks for letting us use your swimming pool!"
+            "description": "Won't you be our neighbor?  And thanks, in advance, for letting us use your swimming pool!"
         },
         "yappy-dog": {
             "id": 7,
@@ -53,7 +53,7 @@
             "id": 8,
             "type": 2,
             "name": "Short Term Rent This",
-            "description": "Who wants to spend a relaxing weekend with my box of M80s?"
+            "description": "Who wants to spend a relaxing weekend with my friendly box of M80s?"
         },
         "mother-in-law": {
             "id": 9,
