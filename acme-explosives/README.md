@@ -10,7 +10,7 @@ For specific project requirements, see [requirements.md](https://github.com/comp
 
 ### Final Result:
 
-![Screenshot 1: No selection](https://github.com/complikatyed/modern-js-development/blob/master/acme-explosives/images/AcmeExplosives.png)
+![Screenshot 1: No selection](https://github.com/complikatyed/modern-js-development/blob/master/images/AcmeExplosives.png)
 
 ### How to run:
 ```
