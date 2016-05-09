@@ -84,7 +84,6 @@ var OakTree = new Tree();
 function growOrchard (pearAmount, oakAmount) {
   PearTree.grow(pearAmount);
   OakTree.grow(oakAmount);
-  console.log("Trees grew");
 };
 
 // Every tenth time the trees are grown, invoke the trim method.
@@ -93,7 +92,6 @@ function growOrchard (pearAmount, oakAmount) {
 function trimTrees (pearAmount, oakAmount) {
   PearTree.trim(pearAmount);
   OakTree.trim(oakAmount);
-  console.log("Trees trimmed");
 };
 
 // Every second, grow the trees
@@ -123,6 +121,6 @@ var timer = setInterval(function() {
 
 
 function displayTrees() {
-  output.innerHTML += `<p>${counter}</p><p>Pear tree is now ${PearTree.height} cm tall and has ${PearTree.branches} branches</p><p>Oak tree is now ${OakTree.height} cm tall and has ${OakTree.branches} branches</p>`;
+  output.innerHTML += `<p>Pear tree is now ${PearTree.height} cm tall and has ${PearTree.branches} branches</p><p>Oak tree is now ${OakTree.height} cm tall and has ${OakTree.branches} branches</p>`;
 };
 
