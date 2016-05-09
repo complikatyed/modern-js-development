@@ -1,13 +1,13 @@
-
 $(document).ready(function() {
 
-  var categories = [];
-  var types      = [];
-  var products   = [];
-  var fireworks  = [];
-  var demolition = [];
+  var categories  = [];
+  var types       = [];
+  var products    = [];
+  var sortedArray = [];
+  var fireworks   = [];
+  var demolition  = [];
 
-// --------- First Promise (Loads from categories.json) ----------- //
+// ----- First Promise (Loads from categories.json) ----- //
 
   var loadAllCategories = function() {
     return new Promise((resolve, reject) => {
@@ -21,23 +21,14 @@ $(document).ready(function() {
     });
   };
 
-// --------- Second Promise (Loads from types.json) ----------- //
+// ----- Second Promise (Loads from types.json) ----- //
 
   var loadAllTypes = function() {
     return new Promise((resolve, reject) => {
       $.ajax({
         url: "jsonFiles/types.json"
       }).done(function(data) {
-
-        var allTypes = data.types;
-        for (i in allTypes) {
-          if (allTypes[i].category === 0) {
-            allTypes[i].category = "fireworks";
-          } else {
-            allTypes[i].category = "demolition";
-          }
-          types.push(allTypes[i]);
-        };
+        matchCategoryToType(data);
         resolve(data);
       }).fail(function(xhr, status, error) {
         reject(error);
@@ -45,7 +36,7 @@ $(document).ready(function() {
     });
   };
 
-// --------- Third Promise (Loads from products.json) ----------- //
+// ----- Third Promise (Loads from products.json) ----- //
 
   var loadAllProducts = function() {
     return new Promise((resolve, reject) => {
@@ -72,7 +63,6 @@ $(document).ready(function() {
     })
     .then (
       function(typesData){
-        types = typesData.types;
         return loadAllProducts();
       },
       function(reason) {
@@ -90,72 +80,97 @@ $(document).ready(function() {
 // ----- Function to address clicked choice from catalog ----- //
 
   $('.dropdown-menu li a').click(function(){
-    if(this.id === "fireworks") {
+    if(this.id === 'fireworks') {
       populatePage(fireworks);
-    } else if (this.id === "demolition") {
+    } else if (this.id === 'demolition') {
       populatePage(demolition);
     } else {
       populatePage(products);
     }
   });
 
-// ----- Function to push all products into an array ----- //
+// ----- Pushes all products from object into an array ----- //
+
   function makeProductsArray(data) {
+    var i;
     var realProducts = data.products[0];
     for (i in realProducts) {
       products.push(realProducts[i]);
+    }
+    makeStringifiedProductsArrays(products);
+  }
+
+// ----- Matches category to type and creates types array ----- //
+
+  function matchCategoryToType(data) {
+    var allTypes = data.types;
+    for (i in allTypes) {
+      if (allTypes[i].category === 0) {
+        allTypes[i].category = 'fireworks';
+      } else {
+        allTypes[i].category = 'demolition';
+      }
+      types.push(allTypes[i]);
     };
-    makeSortedProductsArrays(products);
   };
 
+// ----- Converts product info from integers to words ----- //
 
-// ----- Function to choose what is being added to page ----- //
+  function makeStringifiedProductsArrays(products) {
+    stringifyCategoryData(products);
+    stringifyTypeData(sortedArray);
+    makeSpecificArrays(sortedArray);
+  };
 
-  function makeSortedProductsArrays(products) {
-    var sortedArray = [];
+// --- Adds category name in words based on product type --- //
 
+  function stringifyCategoryData(products) {
     $.each(products, function(index, value) {
-
       if (value.type < 3) {
-        value.category = "fireworks";
+        value.category = 'fireworks';
         sortedArray.push(value);
-
       } else {
-        value.category = "demolition";
+        value.category = 'demolition';
         sortedArray.push(value);
       }
     });
+  };
 
+// ----- Changes type value from integer to name --- //
+  function stringifyTypeData(sortedArray) {
     $.each(sortedArray, function(index, value) {
       var number = value.type;
       value.type = types[number].name;
     });
+  };
 
+// ----- Creates separate arrays for fireworks and demo products --- //
+
+  function makeSpecificArrays(sortedArray) {
     $.each(sortedArray, function(index, value) {
-      if (value.category === "fireworks") {
+      if (value.category === 'fireworks') {
         fireworks.push(value);
       } else
       {
         demolition.push(value);
       }
-    })
-
+    });
   };
 
-// ----- Function to take the items from the array and display them on page ------ //
+// ----- Takes products from an array and displays them on page ------ //
 
   function populatePage(productArray) {
 
-    var productString = "";
+    var productString = '';
 
     $.each(productArray, function (index, value) {
-      productString += `<div class="col-sm-4 card"><h3 class="name">${value.name}</h3>`
-      productString += `<p class="description">${value.description}</p>`
-      productString += `<p class="type">Category: ${value.category}</p>`
-      productString += `<p class="type">Type: ${value.type}</p></div>`
+      productString += `<div class="col-sm-4 card"><h3 class="name">${value.name}</h3>`;
+      productString += `<p class="description">${value.description}</p>`;
+      productString += `<p class="type">Category: ${value.category}</p>`;
+      productString += `<p class="type">Type: ${value.type}</p></div>`;
     });
 
-    $("#products").html(productString);
+    $('#products').html(productString);
   };
 
 
