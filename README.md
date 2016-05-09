@@ -10,6 +10,7 @@ Third set of [front-end milestones](https://github.com/nashville-software-school
 -------
 
 ![Screenshot 1: No selection](https://github.com/complikatyed/modern-js-development/blob/master/images/AcmeExplosives.png)
+--------
 ![Screenshot 2: No selection](https://github.com/complikatyed/modern-js-development/blob/master/images/OrchardExercise.png)
 
 
