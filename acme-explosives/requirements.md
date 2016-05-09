@@ -1,6 +1,6 @@
-# Acme Explosives
+[Nashville Software School - Front End Milestones](https://github.com/nashville-software-school/front-end-milestones/tree/master/4-modern-javascript-developer)
 
-## Instructions
+## Project Instructions
 
 You are going to be creating several JSON files that will be describing all of the explosive products that you sell. You need to use Promises to handle the order of the asynchronous operations needed to load the data.
 
