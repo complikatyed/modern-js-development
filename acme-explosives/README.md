@@ -1,12 +1,15 @@
 # NSS Exercise: ACME Explosives
 
 ### Description:
--Use promises to call data from three json files
--Output product information to screen based on user's choice from dropdown menu
--Use Bootstrap for nav and grid setup
+-Use promises to call data from three json files  
+-Output product information to screen based on user's choice from dropdown menu  
+-Use Bootstrap for nav and grid setup  
+
+For specific project requirements, see [requirements.md](https://github.com/complikatyed/modern-js-development/blob/master/acme-explosives/requirements.md) 
 
 ### Final Result:
 
+![Screenshot 1: No selection](https://github.com/complikatyed/modern-js-development/blob/master/acme-explosives/images/AcmeExplosives.png)
 
 ### How to run:
 ```
