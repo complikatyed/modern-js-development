@@ -2,7 +2,7 @@
 
 ### Description:
 - Uses promises to call data from three json files  
-- Outsput product information to screen based on user's choice from dropdown menu 
+- Outputs product information to screen based on user's choice from dropdown menu 
 - Product type and category are displayed as strings, rather than integer values
 - Uses Bootstrap for nav and grid setup  
 
